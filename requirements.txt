@@ -1,6 +1,6 @@
-django<1.9
+django<1.12
 configobj
-django-admin-bootstrapped
+git+https://github.com/ZeroCater/django-admin-bootstrapped.git@13a0441b553fee6364001e1d1d5960614938ebb3#egg=django_admin_bootstrapped
 django-phonenumber-field
 django-autocomplete-light<3
 django-watson

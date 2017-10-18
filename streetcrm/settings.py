@@ -73,30 +73,35 @@ ORG_NAME = config["general"].get("org_name", None)
 
 # This should never be True in production.
 DEBUG = config["general"]["debug"]
-TEMPLATE_DEBUG = DEBUG
 
 # List of accepted hosts the site runs on.
 ALLOWED_HOSTS = config["general"]["allowed_hosts"]
 
 
-# Application definition
-TEMPLATE_DIRS = (
-    os.path.join(BASE_DIR, "streetcrm", "templates"),
-)
-
-TEMPLATE_CONTEXT_PROCESSORS = (
-    "django.contrib.auth.context_processors.auth",
-    "django.template.context_processors.debug",
-    "django.template.context_processors.i18n",
-    "django.template.context_processors.media",
-    "django.template.context_processors.static",
-    "django.template.context_processors.tz",
-    "django.contrib.messages.context_processors.messages",
-    "streetcrm.context_processors.search_header",
-    "streetcrm.context_processors.for_logo",
-    "streetcrm.context_processors.check_archive_permission",
-    "streetcrm.context_processors.custom_theme",
-)
+TEMPLATES = [
+    {
+        'BACKEND': 'django.template.backends.django.DjangoTemplates',
+        'DIRS': [
+            os.path.join(BASE_DIR, "streetcrm", "templates")
+        ],
+        'APP_DIRS': True,
+        'OPTIONS': {
+            'context_processors': [
+                "django.contrib.auth.context_processors.auth",
+                "django.template.context_processors.debug",
+                "django.template.context_processors.i18n",
+                "django.template.context_processors.media",
+                "django.template.context_processors.static",
+                "django.template.context_processors.tz",
+                "django.contrib.messages.context_processors.messages",
+                "streetcrm.context_processors.search_header",
+                "streetcrm.context_processors.for_logo",
+                "streetcrm.context_processors.check_archive_permission",
+                "streetcrm.context_processors.custom_theme",
+            ],
+        }
+    },
+]
 
 
 INSTALLED_APPS = (
@@ -108,7 +113,7 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'streetcrm',
+    'streetcrm.apps.STREETCRMAppConfig',
     'watson',
 )
 

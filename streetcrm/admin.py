@@ -723,7 +723,7 @@ class ParticipantAdmin(mixins.AdminArchiveMixin, mixins.SignInSheetAdminMixin, S
                      "participant_zipcode_address")
     list_filter = (admin_filters.ArchivedFilter,)
     list_display = ("name", "US_primary_phone", "institution", "participant_street_address", "participant_city_address",)
-    readonly_fields = ("action_history", "event_history_name")
+    readonly_fields = ("action_history",)
     fieldsets = (
         (None, {
             "fields": ("name", "primary_phone",
@@ -759,25 +759,17 @@ class ParticipantAdmin(mixins.AdminArchiveMixin, mixins.SignInSheetAdminMixin, S
     form = st_forms.ParticipantForm
     actions = None
 
-    @property
-    def event_history_name(self, obj):
-        """ Name of event history fieldset """
-        return "Actions that {name} attended".format(
-            name=obj.name
-        )
-
     def action_history(self, obj):
         """ HTML history of the events attended by the participant """
         template_name = "admin/includes/event_history.html"
         action_history_template = loader.get_template(template_name)
-        context = template.Context({
-            "events": obj.events,
-        })
+        context = {"events": obj.events}
         return action_history_template.render(context)
 
     # To prevent django from distorting how the event_history method looks tell
     # it to allow HTML using the allow_tags method attribute.
     action_history.allow_tags = True
+    action_history.short_description = "Actions this participant attended"
 
     def US_primary_phone(self, obj):
         if obj.primary_phone is None or obj.primary_phone == "":

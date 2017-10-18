@@ -1,4 +1,4 @@
-import autocomplete_light
+import autocomplete_light.shortcuts as autocomplete_light
 from django.db.models import Q
 
 from streetcrm import models

@@ -321,3 +321,16 @@ post-rename.  After that, migrations should all work as expected and you can jus
 
 as usual.
 
+Upgrading from Django 1.8
+------------------------
+
+There are a few additional steps for upgrading an existing instance from Django 1.8.
+
+* First you'll need to run `pip install -U -r requirements.txt` to upgrade your virtual
+environment.
+* There are additional migrations in between Django 1.8 and 1.11, so you'll need to run
+`python manage.py migrate`.
+
+Additionally, there are a few items to keep in mind:
+
+* Edit and add buttons are changed on foreign key fields (for fields like Organizer on Events).

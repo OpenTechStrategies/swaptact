@@ -57,7 +57,6 @@ class TagAdminForm(django.forms.ModelForm):
             "name": django.forms.TextInput(
                 attrs={"size": models.Tag.get_field("name").max_length}
             ),
-            "group": widgets.ForeignKeyRadioWidget(),
         }
 
 class AutoCompleteModelForm(forms.ModelForm):
