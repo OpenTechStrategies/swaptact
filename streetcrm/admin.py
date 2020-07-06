@@ -164,10 +164,11 @@ class STREETCRMAdminSite(admin.AdminSite):
     def search_dispatcher(self, request):
         """ Takes in searches and sends them to the advanced or basic view """
         advanced = request.GET.get("advanced", False)
+        advanced_search = request.GET.get("search_for", False) is not False
 
-        # Build the form from the POST data
-        if request.method == "POST":
-            form = st_forms.SearchForm(request.POST)
+        # Build the form from GET data if supplied
+        if advanced_search:
+            form = st_forms.SearchForm(request.GET)
         else:
             form = st_forms.SearchForm()
 
@@ -176,8 +177,8 @@ class STREETCRMAdminSite(admin.AdminSite):
         else:
             search_query = None
 
-        # If it's a GET request or the form is invalid, return now.
-        if request.method == "GET" or not form.is_valid():
+        # If the form is invalid, return now.
+        if not form.is_valid():
             # Show results from basic search, but still show the
             # advanced form when requested
             
@@ -195,11 +196,11 @@ class STREETCRMAdminSite(admin.AdminSite):
             )
 
         # if it's an export, do that
-        if request.POST.get("export_btn"):
-            return self.export_search(request, form, advanced, search_query)
+        if request.GET.get("export_btn"):
+            return self.export_search(request, form, advanced_search, search_query)
         
         # If it's advanced send it that view, else send it to the basic view
-        if advanced:
+        if advanced_search:
             return self.advanced_search_view(request, form)
         else:
             return self.basic_search_view(request, form)

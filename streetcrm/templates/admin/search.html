@@ -31,8 +31,7 @@
 
 <h2>{% trans "Search" %}</h2>
 <div>
-  <form id="advanced_search_form" method="POST" action="{% url 'admin:search' %}?advanced={% if advanced %}1{% endif %}">
-    {% csrf_token %}
+  <form id="advanced_search_form" method="GET" action="{% url 'admin:search' %}?advanced={% if advanced %}1{% endif %}">
     {% block search %}
     {% if advanced %}
     <div id="id_search_form">
